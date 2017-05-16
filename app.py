@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     app_name = os.getenv('APP_NAME', "Flask")
-    return "Hello from %s. Data: %s" % (app_name, request.query_string)
+    return "Hello from %s.<br> Data: %s.<br> Description: %s" % (app_name, request.query_string, os.getenv('APP_DESC', "Flask is a microframework for Python based on Werkzeug, Jinja 2 and good intentions"))
 
 @app.route("/msg", methods=["POST", "GET"])
 def msg():
