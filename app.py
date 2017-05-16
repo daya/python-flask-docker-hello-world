@@ -22,7 +22,7 @@ def hello():
 @app.route("/msg", methods=["POST", "GET"])
 def msg():
   print("Args %s, %s", (request.args.get('name'), request.args.items))
-  return "MSG Received: %s" % (request.data if request.data else request.query_string)
+  return "MSG Received: %s. <br/> ContainerID: %s" % (request.data if request.data else request.query_string, host_name())
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0',port=int(os.getenv("FLASK_PORT", 5000)))
