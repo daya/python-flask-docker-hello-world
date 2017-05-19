@@ -7,16 +7,20 @@ app = Flask(__name__)
 def host_name():
   return Popen("hostname", stdout=PIPE).stdout.read()
 
+def client_cert():
+  return request.headers.get('X_SSL_CLIENT_CERT')
+
 @app.route("/")
 def hello():
+  print("CLIENT CERT: %s" % client_cert())
   app_name = os.getenv('APP_NAME', "Flask")
   app_desc = os.getenv('APP_DESC', "Flask is a microframework for Python based on Werkzeug, Jinja 2 and good intentions")
-
-  return "Hello from %s.<br/> Data: %s.<br/> Description: %s.<br/> ContainerID: %s" % (
+  return "Hello from %s.<br/>\n Data: %s.<br/>\n Description: %s.<br/>\n ContainerID: %s . <br>\n SSL Client Certificate: %s" % (
     app_name,
     request.query_string,
     app_desc,
-    host_name()
+    host_name(),
+    client_cert()
     )
 
 @app.route("/msg", methods=["POST", "GET"])
